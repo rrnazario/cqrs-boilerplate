@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/WorkoutPlan/.vs/WorkoutPlan
+/.vs
+/WorkoutPlan/WorkoutPlan.API/obj
+/WorkoutPlan/WorkoutPlan.API/bin
+/WorkoutPlan/WorkoutPlan.API/Properties
+/WorkoutPlan/WorkoutPlan.Application/obj
+/WorkoutPlan/WorkoutPlan.Application/bin
+/WorkoutPlan/WorkoutPlan.Domain/obj
+/WorkoutPlan/WorkoutPlan.Domain/bin
+/WorkoutPlan/WorkoutPlan.Infra/obj
+/WorkoutPlan/WorkoutPlan.Infra/bin
+/WorkoutPlan/.vs/ProjectEvaluation
