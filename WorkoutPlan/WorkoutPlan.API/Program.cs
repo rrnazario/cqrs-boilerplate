@@ -1,3 +1,5 @@
+using Serilog;
+using Serilog.Sinks.Grafana.Loki;
 using WorkoutPlan.Application.DI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Customizations
+builder.Host.AddSerilog();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddMessaging(builder.Configuration);
 builder.Services.AddMediator();
@@ -26,5 +29,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseSerilogRequestLogging();
 
 app.Run();
