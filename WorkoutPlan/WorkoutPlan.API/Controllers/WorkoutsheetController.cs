@@ -1,13 +1,16 @@
-﻿namespace WorkoutPlan.API.Controllers
-{
-    //[ApiController]
-    //[Route("api/[controller]")]
-    //public class WorkoutsheetController : ControllerBase
-    //{
+﻿using Microsoft.AspNetCore.Mvc;
 
-    //    public IActionResult Index()
-    //    {
-    //        return Ok();
-    //    }
-    //}
+namespace WorkoutPlan.API.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class WorkoutsheetController : ControllerBase
+    {
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return Ok();
+        }
+    }
 }

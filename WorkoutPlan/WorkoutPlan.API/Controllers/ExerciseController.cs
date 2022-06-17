@@ -33,7 +33,7 @@ namespace WorkoutPlan.API.Controllers
             {
                 _logger.LogError(e, e.Message);
 
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
 
@@ -53,7 +53,7 @@ namespace WorkoutPlan.API.Controllers
             {
                 _logger.LogError(e, e.Message);
 
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
     }

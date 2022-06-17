@@ -7,7 +7,7 @@ namespace WorkoutPlan.Domain.SeedWork
     {
         protected Person(string name)
         {
-            Name = name.MustNotBeNullOrEmpty();
+            Name = name.MustNotBeNullOrEmpty(_ => new ArgumentException(nameof(Name)));
         }
 
         public string Name { get; protected set; }

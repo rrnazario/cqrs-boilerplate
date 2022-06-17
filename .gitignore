@@ -18,3 +18,5 @@
 /WorkoutPlan/WorkoutPlan.API/WorkoutPlan.API.csproj.user
 /WorkoutPlan/WorkoutPlan.Service/bin/Debug/net6.0
 *.user
+/WorkoutPlan/WorkoutPlan.Domain.UnitTest/bin/Debug/net6.0
+/WorkoutPlan/WorkoutPlan.Domain.UnitTest/obj

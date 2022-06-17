@@ -24,8 +24,4 @@
     <ProjectReference Include="..\WorkoutPlan.Infra\WorkoutPlan.Infra.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>
