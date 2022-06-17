@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Light.GuardClauses" Version="10.0.0" />
     <PackageReference Include="Marten" Version="5.5.2" />
     <PackageReference Include="MassTransit" Version="8.0.3" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
@@ -21,6 +22,10 @@
   <ItemGroup>
     <ProjectReference Include="..\WorkoutPlan.Domain\WorkoutPlan.Domain.csproj" />
     <ProjectReference Include="..\WorkoutPlan.Infra\WorkoutPlan.Infra.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

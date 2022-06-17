@@ -7,13 +7,6 @@ namespace WorkoutPlan.Application.DI
 {
     public static class MessagingInjection
     {
-        class MessagingOptions
-        {
-            public string Host { get; set; }
-            public string User { get; set; }
-            public string Password { get; set; }
-        }
-
         public static IServiceCollection AddMessaging(this IServiceCollection services, IConfiguration configuration)
         {
             var config = configuration.GetSection("Messaging")
@@ -33,6 +26,8 @@ namespace WorkoutPlan.Application.DI
                     });
 
                     rbtConfig.AutoStart = true;
+
+                    rbtConfig.UseInMemoryOutbox();
                 });
             });
 
@@ -45,5 +40,12 @@ namespace WorkoutPlan.Application.DI
 
             return services;
         }
+    }
+
+    public class MessagingOptions
+    {
+        public string Host { get; set; }
+        public string User { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -14,3 +14,7 @@
 /WorkoutPlan/WorkoutPlan.Infra/obj
 /WorkoutPlan/WorkoutPlan.Infra/bin
 /WorkoutPlan/.vs/ProjectEvaluation
+/WorkoutPlan/WorkoutPlan.Service/obj
+/WorkoutPlan/WorkoutPlan.API/WorkoutPlan.API.csproj.user
+/WorkoutPlan/WorkoutPlan.Service/bin/Debug/net6.0
+*.user

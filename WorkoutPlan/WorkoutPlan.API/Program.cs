@@ -1,5 +1,4 @@
 using Serilog;
-using Serilog.Sinks.Grafana.Loki;
 using WorkoutPlan.Application.DI;
 
 var builder = WebApplication.CreateBuilder(args);

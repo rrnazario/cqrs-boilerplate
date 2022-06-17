@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Events\" />
+    <PackageReference Include="Light.GuardClauses" Version="10.0.0" />
   </ItemGroup>
 
 </Project>

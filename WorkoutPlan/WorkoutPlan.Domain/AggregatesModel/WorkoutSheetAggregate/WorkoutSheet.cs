@@ -1,5 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using WorkoutPlan.Domain.SeedWork;
+using Light.GuardClauses;
+using WorkoutPlan.Domain.Events.Worksheets;
 
 namespace WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate
 {
@@ -11,9 +13,9 @@ namespace WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate
         private List<Exercise> _exercises;        
         public IReadOnlyList<Exercise> Exercises => _exercises.AsReadOnly();
 
-        public Athlete Athlete { get; }
+        public Guid AthleteId { get; private set; }
 
-        public Teacher Teacher { get; }
+        public Guid TeacherId { get; private set; }
 
 
         protected WorkoutSheet() : base()
@@ -21,16 +23,43 @@ namespace WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate
             _exercises = new();
         }
 
+        public WorkoutSheet(Guid athleteId, Guid teacherId, List<Exercise> exercises)  : this()
+        {
+            athleteId.MustNotBe(Guid.Empty).MustNotBeNullReference();
+            teacherId.MustNotBe(Guid.Empty).MustNotBeNullReference();
+            exercises.MustNotBeNullOrEmpty();
+
+            var newWorkoutEvent = new WorkoutsheetCreatedDomainEvent(athleteId, teacherId);
+            AddUncommitedEvent(newWorkoutEvent);
+            Apply(newWorkoutEvent);
+
+            foreach (var exercise in exercises)
+                AddExercise(exercise);
+        }
+
+        private void Apply(WorkoutsheetCreatedDomainEvent evt)
+        {
+            TeacherId = evt.teacherId;
+            AthleteId = evt.athleteId;
+
+            Version++;
+        }
 
         public void AddExercise(Exercise exercise)
         {
-            //TODO:Validations
+            if (_exercises.All(a => a.Id != exercise.Id))
+            {
+                var addedEvent = new WorksheetExerciseAddedDomainEvent(exercise);
 
-            _exercises.Add(exercise);
-
-            //TODO: Add exercise added event
+                Apply(addedEvent);
+                AddUncommitedEvent(addedEvent);
+            }
         }
 
-
+        private void Apply(WorksheetExerciseAddedDomainEvent evt)
+        {
+            _exercises.Add(evt.exercise);
+            Version++;
+        }
     }
 }

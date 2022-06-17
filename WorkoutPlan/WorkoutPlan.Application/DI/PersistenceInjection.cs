@@ -23,6 +23,16 @@ namespace WorkoutPlan.Application.DI
                 cfg.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.CreateOrUpdate;
 
                 //TODO: Modify aggregation root entitiy mappers
+                
+                //only for debug
+                cfg.CreateDatabasesForTenants(provider =>
+                {
+                    provider.ForTenant().
+                    CheckAgainstPgDatabase().
+                    WithOwner("postgres"). //TODO: Not hardcode it
+                    WithEncoding("UTF-8").
+                    ConnectionLimit(-1);
+                });
             });
 
             return services;

@@ -9,14 +9,15 @@ namespace WorkoutPlan.Domain.SeedWork
         
         [JsonIgnore]
         public IReadOnlyList<IDomainEvent> UncommitedEvents => _uncommitedEvents.AsReadOnly();
-        public Guid Id { get; }
+        public Guid Id { get; protected set; }
+        public int Version { get; protected set; } = 0;
 
         public Entity()
         {
             _uncommitedEvents = new();
         }
 
-        public void AddEvent(IDomainEvent evt) => _uncommitedEvents.Add(evt);
-        public void ClearEvents() => _uncommitedEvents.Clear();
+        public void AddUncommitedEvent(IDomainEvent evt) => _uncommitedEvents.Add(evt);
+        public void ClearUncommitedEvents() => _uncommitedEvents.Clear();
     }
 }

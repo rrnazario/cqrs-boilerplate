@@ -1,21 +1,63 @@
 ﻿using WorkoutPlan.Domain.SeedWork;
+using Light.GuardClauses;
+using WorkoutPlan.Application.Events.Exercises;
+using System.Text.Json.Serialization;
+using WorkoutPlan.Domain.Events.Exercises;
 
 namespace WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate
 {
     public record Exercise 
         : Entity
     {
-        public string Name { get; }
-        public string Description { get; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
         
         private List<string> _medias;
+        
+        [JsonIgnore]
         public IReadOnlyCollection<string> Medias => _medias.AsReadOnly();
 
-        public Exercise(string name, string description, List<string> medias)
+        protected Exercise() { _medias = new(); }
+        public Exercise(string name, string description, List<string> medias) : this()
         {
-            Name = name;
-            Description = description;
-            _medias = medias;
+            name.MustNotBeNullOrEmpty();
+            description.MustNotBeNullOrEmpty();
+            medias.MustNotBeNullOrEmpty();
+
+            foreach (var media in medias)            
+                AddMedia(media);            
+
+            var evt = new ExerciseCreatedDomainEvent(Guid.NewGuid(), name, description, _medias);
+            
+            AddUncommitedEvent(evt);
+            Apply(evt);
+        }
+
+        private void AddMedia(string media)
+        {
+            if (!string.IsNullOrEmpty(media))
+            {
+                var newMediaEvent = new EventMediaCreatedDomainEvent(media);
+                AddUncommitedEvent(newMediaEvent);
+                Apply(newMediaEvent);
+            }
+        }
+
+        private void Apply(EventMediaCreatedDomainEvent newMediaEvent)
+        {
+            _medias.Add(newMediaEvent.Media);
+
+            Version++;
+        }
+
+        private void Apply(ExerciseCreatedDomainEvent evt)
+        {
+            Id = evt.Id;
+            Name = evt.Name;
+            Description = evt.Description;
+            _medias = evt.Medias;
+
+            Version++;
         }
     }
 }
