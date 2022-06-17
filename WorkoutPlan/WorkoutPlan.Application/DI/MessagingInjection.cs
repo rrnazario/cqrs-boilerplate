@@ -7,12 +7,18 @@ namespace WorkoutPlan.Application.DI
 {
     public static class MessagingInjection
     {
-       public static IServiceCollection AddMessaging(this IServiceCollection services, IConfiguration configuration)
+        class MessagingOptions
         {
-            services.AddMassTransit(cfg =>
-            {
-                cfg.UsingRabbitMq((c, r) => ConfigureDefaultRabbitMQ(c, r, configuration));
-            });
+            public string Host { get; set; }
+            public string User { get; set; }
+            public string Password { get; set; }
+
+            public MessagingOptions() { }
+        }
+
+        public static IServiceCollection AddMessaging(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddMassTransit(cfg => cfg.ConfigureDefaultRabbitMQ(configuration));
 
             return services;
         }
@@ -26,9 +32,9 @@ namespace WorkoutPlan.Application.DI
 
 
         public static void ConfigureDefaultRabbitMQ(this IBusRegistrationConfigurator c, IConfiguration configuration)
-            => c.UsingRabbitMq((c, r) => ConfigureDefaultRabbitMQ(c, r, configuration));
+            => c.UsingRabbitMq((c, r) => AddDefaultSettingsRabbitMQ(c, r, configuration));
 
-        public static void ConfigureDefaultRabbitMQ(IBusRegistrationContext context, IRabbitMqBusFactoryConfigurator rbtConfig, IConfiguration configuration)
+        private static void AddDefaultSettingsRabbitMQ(IBusRegistrationContext context, IRabbitMqBusFactoryConfigurator rbtConfig, IConfiguration configuration)
         {
             var messagingOptions = configuration.GetSection("Messaging")
                 .Get<MessagingOptions>(a => a.BindNonPublicProperties = true);
@@ -48,12 +54,5 @@ namespace WorkoutPlan.Application.DI
 
             rbtConfig.ConfigureEndpoints(context);
         }
-    }
-
-    public class MessagingOptions
-    {
-        public string Host { get; set; }
-        public string User { get; set; }
-        public string Password { get; set; }
     }
 }
