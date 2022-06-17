@@ -28,6 +28,8 @@ namespace WorkoutPlan.Application.DI
                     rbtConfig.AutoStart = true;
 
                     rbtConfig.UseInMemoryOutbox();
+
+                    rbtConfig.ConfigureEndpoints(ctx);
                 });
             });
 

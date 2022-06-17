@@ -28,6 +28,8 @@ builder.Services.AddMassTransit(cfg =>
         });
 
         rbtConfig.AutoStart = true;
+
+        rbtConfig.ConfigureEndpoints(ctx);
     });
 
     cfg.AddConsumer<ExerciseCreatedConsumer>();
