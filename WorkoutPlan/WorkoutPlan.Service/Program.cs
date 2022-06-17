@@ -11,26 +11,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddHostedService<SimpleReceiver>();
 
-var config = builder.Configuration.GetSection("Messaging")
-                .Get<MessagingOptions>(a => a.BindNonPublicProperties = true);
-
 builder.Services.AddMassTransit(cfg =>
 {
-    cfg.UsingRabbitMq((ctx, rbtConfig) =>
-    {
-        rbtConfig.UseMessageRetry(r => r.Interval(5, TimeSpan.FromSeconds(30)));
-        rbtConfig.UseDelayedRedelivery(r => r.Interval(5, TimeSpan.FromSeconds(30)));
-
-        rbtConfig.Host(config.Host, "/", hostConfig =>
-        {
-            hostConfig.Username(config.User);
-            hostConfig.Password(config.Password);
-        });
-
-        rbtConfig.AutoStart = true;
-
-        rbtConfig.ConfigureEndpoints(ctx);
-    });
+    cfg.ConfigureDefaultRabbitMQ(builder.Configuration);
 
     cfg.AddConsumer<ExerciseCreatedConsumer>();
 });

@@ -7,30 +7,11 @@ namespace WorkoutPlan.Application.DI
 {
     public static class MessagingInjection
     {
-        public static IServiceCollection AddMessaging(this IServiceCollection services, IConfiguration configuration)
+       public static IServiceCollection AddMessaging(this IServiceCollection services, IConfiguration configuration)
         {
-            var config = configuration.GetSection("Messaging")
-                .Get<MessagingOptions>(a => a.BindNonPublicProperties = true);
-
             services.AddMassTransit(cfg =>
             {
-                cfg.UsingRabbitMq((ctx, rbtConfig) =>
-                {
-                    rbtConfig.UseMessageRetry(r => r.Interval(5, TimeSpan.FromSeconds(30)));
-                    rbtConfig.UseDelayedRedelivery(r => r.Interval(5, TimeSpan.FromSeconds(30)));
-
-                    rbtConfig.Host(config.Host, "/", hostConfig =>
-                    {
-                        hostConfig.Username(config.User);
-                        hostConfig.Password(config.Password);
-                    });
-
-                    rbtConfig.AutoStart = true;
-
-                    rbtConfig.UseInMemoryOutbox();
-
-                    rbtConfig.ConfigureEndpoints(ctx);
-                });
+                cfg.UsingRabbitMq((c, r) => ConfigureDefaultRabbitMQ(c, r, configuration));
             });
 
             return services;
@@ -41,6 +22,31 @@ namespace WorkoutPlan.Application.DI
             services.AddMediatR(typeof(MessagingInjection).Assembly);
 
             return services;
+        }
+
+
+        public static void ConfigureDefaultRabbitMQ(this IBusRegistrationConfigurator c, IConfiguration configuration)
+            => c.UsingRabbitMq((c, r) => ConfigureDefaultRabbitMQ(c, r, configuration));
+
+        public static void ConfigureDefaultRabbitMQ(IBusRegistrationContext context, IRabbitMqBusFactoryConfigurator rbtConfig, IConfiguration configuration)
+        {
+            var messagingOptions = configuration.GetSection("Messaging")
+                .Get<MessagingOptions>(a => a.BindNonPublicProperties = true);
+
+            rbtConfig.UseMessageRetry(r => r.Interval(5, TimeSpan.FromSeconds(30)));
+            rbtConfig.UseDelayedRedelivery(r => r.Interval(5, TimeSpan.FromSeconds(30)));
+
+            rbtConfig.Host(messagingOptions.Host, "/", hostConfig =>
+            {
+                hostConfig.Username(messagingOptions.User);
+                hostConfig.Password(messagingOptions.Password);
+            });
+
+            rbtConfig.AutoStart = true;
+
+            rbtConfig.UseInMemoryOutbox();
+
+            rbtConfig.ConfigureEndpoints(context);
         }
     }
 
