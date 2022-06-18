@@ -1,4 +1,4 @@
-using Light.GuardClauses.Exceptions;
+using FluentAssertions;
 using WorkoutPlan.Domain.AggregatesModel.AthleteAggregate;
 
 namespace WorkoutPlan.Domain.UnitTest.Athletes
@@ -9,7 +9,11 @@ namespace WorkoutPlan.Domain.UnitTest.Athletes
         [InlineData("")]
         [Theory]
         public void GivenAnInvalidName_WhenAttemptsToCreateAnAthlete_ThenThrows(string name)
-            => Assert.Throws<ArgumentException>(() => new Athlete(name));
+        {
+            var action = () => new Athlete(name);
+
+            action.Should().Throw<ArgumentException>();
+        }
         
     }
 }
