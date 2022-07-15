@@ -11,6 +11,7 @@ builder.Services.AddSwaggerGen();
 // Customizations
 builder.Host.AddSerilog();
 builder.Services.AddEventStorePersistence(builder.Configuration);
+builder.Services.AddEntityFrameworkPersistence(builder.Configuration);
 builder.Services.AddMessaging(builder.Configuration);
 builder.Services.AddMediator();
 

@@ -46,7 +46,7 @@ namespace WorkoutPlan.Application.DI
         {
             var config = configuration.GetSection("EFPersistence")
                 .Get<PersistenceConfig>(a => a.BindNonPublicProperties = true);
-            //TODO: Add also entityFramewoek connection
+
             services.AddEntityFrameworkNpgsql().AddDbContext<WorkoutContext>(op =>
             {
                 op.UseNpgsql(config.ConnectionString);
