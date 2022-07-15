@@ -1,6 +1,8 @@
 ﻿using Marten;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WorkoutPlan.Infra.Persistence;
 
 namespace WorkoutPlan.Application.DI
 {
@@ -9,11 +11,12 @@ namespace WorkoutPlan.Application.DI
         class PersistenceConfig
         {
             public string ConnectionString { get; set; }
+            public string Owner { get; set; }
         }
         
-        public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddEventStorePersistence(this IServiceCollection services, IConfiguration configuration)
         {           
-            var config = configuration.GetSection("Persistence")
+            var config = configuration.GetSection("ESPersistence")
                 .Get<PersistenceConfig>(a => a.BindNonPublicProperties = true);
 
             services.AddMarten(cfg =>
@@ -29,12 +32,26 @@ namespace WorkoutPlan.Application.DI
                 {
                     provider.ForTenant().
                     CheckAgainstPgDatabase().
-                    WithOwner("postgres"). //TODO: Not hardcode it
+                    WithOwner(config.Owner).
                     WithEncoding("UTF-8").
                     ConnectionLimit(-1);
                 });
             });
 
+            return services;
+        }
+
+        public static IServiceCollection AddEntityFrameworkPersistence(this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            var config = configuration.GetSection("EFPersistence")
+                .Get<PersistenceConfig>(a => a.BindNonPublicProperties = true);
+            //TODO: Add also entityFramewoek connection
+            services.AddEntityFrameworkNpgsql().AddDbContext<WorkoutContext>(op =>
+            {
+                op.UseNpgsql(config.ConnectionString);
+            });
+            
             return services;
         }
 

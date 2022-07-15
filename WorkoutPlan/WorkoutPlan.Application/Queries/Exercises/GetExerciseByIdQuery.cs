@@ -1,11 +1,5 @@
 ﻿using Marten;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate;
 
 namespace WorkoutPlan.Application.Queries.Exercises

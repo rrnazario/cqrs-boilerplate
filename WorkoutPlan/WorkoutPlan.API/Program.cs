@@ -10,7 +10,7 @@ builder.Services.AddSwaggerGen();
 
 // Customizations
 builder.Host.AddSerilog();
-builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddEventStorePersistence(builder.Configuration);
 builder.Services.AddMessaging(builder.Configuration);
 builder.Services.AddMediator();
 

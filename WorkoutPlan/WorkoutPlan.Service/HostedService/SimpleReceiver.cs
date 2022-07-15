@@ -1,11 +1,16 @@
 ﻿namespace WorkoutPlan.Service.HostedService
 {
-    public class SimpleReceiver : BackgroundService
+    public class SimpleReceiver : IHostedService
     {
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
-                await Task.Delay(TimeSpan.FromSeconds(2));
+            while (cancellationToken.IsCancellationRequested)
+            {
+                await Task.Delay(TimeSpan.FromHours(1));
+            }
         }
+
+        public async Task StopAsync(CancellationToken cancellationToken)
+            => await Task.Delay(Timeout.Infinite, cancellationToken);
     }
 }
