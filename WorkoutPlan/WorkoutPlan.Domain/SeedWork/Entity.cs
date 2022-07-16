@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace WorkoutPlan.Domain.SeedWork
+﻿namespace WorkoutPlan.Domain.SeedWork
 {
     public abstract record Entity
     {

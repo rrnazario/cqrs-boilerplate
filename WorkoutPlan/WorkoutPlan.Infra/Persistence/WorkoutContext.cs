@@ -1,7 +1,4 @@
-﻿using System.Reflection;
-using Microsoft.EntityFrameworkCore;
-
-namespace WorkoutPlan.Infra.Persistence;
+﻿namespace WorkoutPlan.Infra.Persistence;
 
 public class WorkoutContext : DbContext
 {

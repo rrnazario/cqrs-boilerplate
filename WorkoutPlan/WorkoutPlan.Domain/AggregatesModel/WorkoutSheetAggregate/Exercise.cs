@@ -1,10 +1,4 @@
-﻿using WorkoutPlan.Domain.SeedWork;
-using Light.GuardClauses;
-using WorkoutPlan.Application.Events.Exercises;
-using System.Text.Json.Serialization;
-using WorkoutPlan.Domain.Events.Exercises;
-
-namespace WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate
+﻿namespace WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate
 {
     public record Exercise 
         : Entity
@@ -17,7 +11,7 @@ namespace WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate
         [JsonIgnore]
         public IReadOnlyCollection<string> Medias => _medias.AsReadOnly();
 
-        protected Exercise() { _medias = new(); }
+        private Exercise() { _medias = new(); }
         public Exercise(string name, string description, List<string> medias) : this()
         {
             name.MustNotBeNullOrEmpty();

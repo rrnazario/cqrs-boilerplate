@@ -1,11 +1,10 @@
-﻿using WorkoutPlan.Domain.Events.Athletes;
-using WorkoutPlan.Domain.SeedWork;
-
-namespace WorkoutPlan.Domain.AggregatesModel.AthleteAggregate
+﻿namespace WorkoutPlan.Domain.AggregatesModel.AthleteAggregate
 {
     public record Athlete
         : Person, IAggregateRoot
     {
+        private Athlete() : base("") { }
+        
         public Athlete(string name) : base(name) 
         {
             var evt = new AthleteCreatedDomainEvent(name);

@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WorkoutPlan.Domain.AggregatesModel.AthleteAggregate;
-using WorkoutPlan.Infra.Persistence;
-
-namespace TelegramPartHook.Infrastructure.Persistence.EFConfig
+﻿namespace TelegramPartHook.Infrastructure.Persistence.EFConfig
 {
     internal class ConfigEntityTypeConfiguration
         : IEntityTypeConfiguration<Athlete>

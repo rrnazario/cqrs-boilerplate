@@ -6,6 +6,7 @@ using WorkoutPlan.Service.HostedService;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Host.AddSerilog();
 
 builder.Services.AddControllers();
 

@@ -14,9 +14,9 @@ namespace WorkoutPlan.Service.Consumers
 
         public Task Consume(ConsumeContext<ExerciseCreatedIntegrationEvent> context)
         {
-            _logger.LogInformation("Exercise {Id} successfully created. Received on '{FullName}'",
+            _logger.LogInformation("Exercise {Id} successfully created. Received on '{Name}'",
                                    context.Message.Id,
-                                   typeof(ExerciseCreatedConsumer).Assembly.FullName);
+                                   typeof(ExerciseCreatedConsumer).Assembly.GetName().Name);
 
             return Task.CompletedTask;
         }

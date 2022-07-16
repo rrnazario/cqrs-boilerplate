@@ -47,7 +47,7 @@ namespace WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate
 
         public void AddExercise(Exercise exercise)
         {
-            if (_exercises.All(a => a.Id != exercise.Id))
+            if (!_exercises.Any(_ => _.Id == exercise.Id))
             {
                 var addedEvent = new WorksheetExerciseAddedDomainEvent(exercise);
 

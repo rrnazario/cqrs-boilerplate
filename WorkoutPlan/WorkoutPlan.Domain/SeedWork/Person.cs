@@ -1,6 +1,4 @@
-﻿using Light.GuardClauses;
-
-namespace WorkoutPlan.Domain.SeedWork
+﻿namespace WorkoutPlan.Domain.SeedWork
 {
     public abstract record Person
         : Entity
