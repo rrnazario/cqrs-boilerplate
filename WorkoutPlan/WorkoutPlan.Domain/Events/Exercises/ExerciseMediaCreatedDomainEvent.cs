@@ -2,5 +2,5 @@
 
 namespace WorkoutPlan.Domain.Events.Exercises
 {
-    public record EventMediaCreatedDomainEvent(string Media) : IDomainEvent;
+    public record ExerciseMediaCreatedDomainEvent(string Media) : IDomainEvent;
 }

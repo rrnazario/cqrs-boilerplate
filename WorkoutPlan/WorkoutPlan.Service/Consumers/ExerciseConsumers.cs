@@ -1,7 +1,4 @@
-﻿using MassTransit;
-using WorkoutPlan.Application.Events.Exercises;
-
-namespace WorkoutPlan.Service.Consumers
+﻿namespace WorkoutPlan.Service.Consumers
 {
     public class ExerciseCreatedConsumer : IConsumer<ExerciseCreatedIntegrationEvent>
     {

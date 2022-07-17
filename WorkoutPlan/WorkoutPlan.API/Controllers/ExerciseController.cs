@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WorkoutPlan.Application.Commands.Exercises;
 using WorkoutPlan.Application.Queries.Exercises;
+using WorkoutPlan.Domain.SeedWork;
 
 namespace WorkoutPlan.API.Controllers
 {
@@ -28,6 +29,13 @@ namespace WorkoutPlan.API.Controllers
                 var exerciseId = await _mediator.Send(exercise);
 
                 return Created(nameof(Add), new { Id = exerciseId });
+            }
+            catch (DomainException de)
+            {
+                _logger.LogInformation(de.Message);
+
+                return BadRequest(de.Message);
+
             }
             catch (Exception e)
             {

@@ -1,43 +1,42 @@
 ﻿namespace WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate
 {
-    public record Exercise 
+    public record Exercise
         : Entity
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
-        
+
         private List<string> _medias;
-        
+
         [JsonIgnore]
         public IReadOnlyCollection<string> Medias => _medias.AsReadOnly();
 
         private Exercise() { _medias = new(); }
         public Exercise(string name, string description, List<string> medias) : this()
         {
-            name.MustNotBeNullOrEmpty();
-            description.MustNotBeNullOrEmpty();
-            medias.MustNotBeNullOrEmpty();
+            name.MustNotBeNullOrEmpty(DomainException.Throw);
+            description.MustNotBeNullOrEmpty(DomainException.Throw);
 
-            foreach (var media in medias)            
-                AddMedia(media);            
+            if (medias != null)
+                medias.ForEach(AddMedia);
 
             var evt = new ExerciseCreatedDomainEvent(Guid.NewGuid(), name, description, _medias);
-            
+
             AddUncommitedEvent(evt);
             Apply(evt);
         }
 
         private void AddMedia(string media)
         {
-            if (!string.IsNullOrEmpty(media))
+            if (!string.IsNullOrEmpty(media) && !_medias.Contains(media))
             {
-                var newMediaEvent = new EventMediaCreatedDomainEvent(media);
+                var newMediaEvent = new ExerciseMediaCreatedDomainEvent(media);
                 AddUncommitedEvent(newMediaEvent);
                 Apply(newMediaEvent);
             }
         }
 
-        private void Apply(EventMediaCreatedDomainEvent newMediaEvent)
+        private void Apply(ExerciseMediaCreatedDomainEvent newMediaEvent)
         {
             _medias.Add(newMediaEvent.Media);
 

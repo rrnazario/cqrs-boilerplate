@@ -1,8 +1,3 @@
-using MassTransit;
-using WorkoutPlan.Application.DI;
-using WorkoutPlan.Service.Consumers;
-using WorkoutPlan.Service.HostedService;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

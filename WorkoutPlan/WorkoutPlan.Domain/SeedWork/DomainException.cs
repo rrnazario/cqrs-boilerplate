@@ -1,6 +1,9 @@
 ﻿namespace WorkoutPlan.Domain.SeedWork
 {
-    public abstract class DomainException : Exception
+    public class DomainException : Exception
     {
+        public DomainException(string message) : base(message) { }
+
+        public static DomainException Throw(string? _) => new(_);
     }
 }
