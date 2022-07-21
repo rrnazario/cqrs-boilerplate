@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Marten;
 using Marten.Events;
-using Marten.Services;
 using MassTransit;
 using Moq;
 using System.Data;

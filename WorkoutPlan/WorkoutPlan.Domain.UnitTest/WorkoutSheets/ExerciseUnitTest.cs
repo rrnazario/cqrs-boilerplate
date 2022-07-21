@@ -1,6 +1,4 @@
-﻿using WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate;
-
-namespace WorkoutPlan.Domain.UnitTest.WorkoutSheets
+﻿namespace WorkoutPlan.Domain.UnitTest.WorkoutSheets
 {
     public class ExerciseUnitTest
     {

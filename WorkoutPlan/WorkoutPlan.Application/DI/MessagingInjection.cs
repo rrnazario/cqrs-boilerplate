@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MassTransit;
-using MediatR;
 
 namespace WorkoutPlan.Application.DI
 {

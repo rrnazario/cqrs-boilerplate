@@ -1,7 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using WorkoutPlan.Domain.SeedWork;
-using Light.GuardClauses;
-using WorkoutPlan.Domain.Events.Worksheets;
+﻿using WorkoutPlan.Domain.Events.Worksheets;
 
 namespace WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate
 {

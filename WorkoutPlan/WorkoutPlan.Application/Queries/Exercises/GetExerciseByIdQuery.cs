@@ -1,7 +1,4 @@
-﻿using Marten;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate;
+﻿using Microsoft.Extensions.Logging;
 
 namespace WorkoutPlan.Application.Queries.Exercises
 {
