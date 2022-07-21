@@ -21,3 +21,5 @@
 /WorkoutPlan/WorkoutPlan.Domain.UnitTest/bin/Debug/net6.0
 /WorkoutPlan/WorkoutPlan.Domain.UnitTest/obj
 /WorkoutPlan/.idea/.idea.WorkoutPlan/.idea
+/WorkoutPlan/WorkoutPlan.Application.UnitTest/bin/Debug/net6.0
+/WorkoutPlan/WorkoutPlan.Application.UnitTest/obj

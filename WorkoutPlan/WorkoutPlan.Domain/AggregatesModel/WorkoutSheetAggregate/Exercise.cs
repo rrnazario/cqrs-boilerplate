@@ -17,8 +17,7 @@
             name.MustNotBeNullOrEmpty(DomainException.Throw);
             description.MustNotBeNullOrEmpty(DomainException.Throw);
 
-            if (medias != null)
-                medias.ForEach(AddMedia);
+            medias?.ForEach(AddMedia);
 
             var evt = new ExerciseCreatedDomainEvent(Guid.NewGuid(), name, description, _medias);
 

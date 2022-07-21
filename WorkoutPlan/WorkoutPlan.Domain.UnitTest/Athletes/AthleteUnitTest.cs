@@ -1,6 +1,3 @@
-using FluentAssertions;
-using WorkoutPlan.Domain.AggregatesModel.AthleteAggregate;
-
 namespace WorkoutPlan.Domain.UnitTest.Athletes
 {
     public class AthleteUnitTest
@@ -12,7 +9,7 @@ namespace WorkoutPlan.Domain.UnitTest.Athletes
         {
             var action = () => new Athlete(name);
 
-            action.Should().Throw<ArgumentException>();
+            action.Should().Throw<DomainException>();
         }
         
     }

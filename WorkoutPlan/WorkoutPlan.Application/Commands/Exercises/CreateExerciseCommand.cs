@@ -1,11 +1,4 @@
-﻿using Marten;
-using MediatR;
-using Light.GuardClauses;
-using Exercise = WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate.Exercise;
-using WorkoutPlan.Application.Events.Exercises;
-using MassTransit;
-
-namespace WorkoutPlan.Application.Commands.Exercises
+﻿namespace WorkoutPlan.Application.Commands.Exercises
 {
     public record CreateExerciseCommand(
             string Name,
@@ -40,7 +33,7 @@ namespace WorkoutPlan.Application.Commands.Exercises
 
             var integrationEvent = new ExerciseCreatedIntegrationEvent(exercise.Id);
 
-            await _bus.Publish(integrationEvent);
+            await _bus.Publish(integrationEvent, cancellationToken);
 
             return exercise.Id;
         }

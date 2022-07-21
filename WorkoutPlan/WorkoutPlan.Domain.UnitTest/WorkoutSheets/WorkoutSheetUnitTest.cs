@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using WorkoutPlan.Domain.Events.Worksheets;
-using WorkoutSheet = WorkoutPlan.Domain.AggregatesModel.WorkoutSheetAggregate.WorkoutSheet;
-
-namespace WorkoutPlan.Domain.UnitTest.WorkoutSheets
+﻿namespace WorkoutPlan.Domain.UnitTest.WorkoutSheets
 {
     public class WorkoutSheetUnitTest
     {
@@ -17,8 +13,8 @@ namespace WorkoutPlan.Domain.UnitTest.WorkoutSheets
                                              });
 
             worksheet.UncommitedEvents.Should().HaveCount(2);
-            Assert.True(worksheet.UncommitedEvents.Count(w => w.GetType() == typeof(WorkoutsheetCreatedDomainEvent)) == 1);
-            Assert.True(worksheet.UncommitedEvents.Count(w => w.GetType() == typeof(WorksheetExerciseAddedDomainEvent)) == 1);
+            worksheet.UncommitedEvents.First().Should().BeOfType(typeof(WorkoutsheetCreatedDomainEvent));
+            worksheet.UncommitedEvents.Last().Should().BeOfType(typeof(WorksheetExerciseAddedDomainEvent));
         }
     }
 }

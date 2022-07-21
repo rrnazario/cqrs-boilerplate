@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-using Serilog;
-
-namespace WorkoutPlan.Application.DI
+﻿namespace WorkoutPlan.Application.DI
 {
     public static class LoggingInjection
     {

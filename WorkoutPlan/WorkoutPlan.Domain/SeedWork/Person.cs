@@ -5,7 +5,7 @@
     {
         protected Person(string name)
         {
-            Name = name.MustNotBeNullOrEmpty(_ => new ArgumentException(nameof(Name)));
+            Name = name.MustNotBeNullOrEmpty(DomainException.Throw);
         }
 
         public string Name { get; protected set; }
