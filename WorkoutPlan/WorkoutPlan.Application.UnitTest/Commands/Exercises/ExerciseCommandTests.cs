@@ -14,7 +14,7 @@ namespace WorkoutPlan.Application.UnitTest.Commands.Exercises
         public async Task GivenProperParameters_WhencreatingAnExerciseFromCommand_RunsSuccessfully()
         {
             //Arrange
-            var command = new CreateExerciseCommand("pullover", "Do a pullover", new() { });
+            var command = new CreateExerciseCommand("pullover", "Do a pullover", new());
 
             var target = CreateCreateExerciseCommandHandler();
 
@@ -26,8 +26,8 @@ namespace WorkoutPlan.Application.UnitTest.Commands.Exercises
         }
 
         private CreateExerciseCommandHandler CreateCreateExerciseCommandHandler(
-            IDocumentStore documentStore = default,
-            IBus bus = default)
+            IDocumentStore? documentStore = null,
+            IBus? bus = null)
         {
             return new(documentStore ?? CreateDocumentStoreMock(),
                        bus ?? new Mock<IBus>().Object);

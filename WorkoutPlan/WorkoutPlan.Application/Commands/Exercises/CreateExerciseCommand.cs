@@ -4,8 +4,7 @@
             string Name,
             string Description,
             List<string> Medias
-        ) : IRequest<Guid>
-    { }
+        ) : IRequest<Guid>;
 
 
     public class CreateExerciseCommandHandler : IRequestHandler<CreateExerciseCommand, Guid>

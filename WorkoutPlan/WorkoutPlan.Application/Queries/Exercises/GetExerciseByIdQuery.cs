@@ -4,8 +4,7 @@ namespace WorkoutPlan.Application.Queries.Exercises
 {
     public record GetExerciseByIdQuery(
         Guid Id
-        ) : IRequest<ExerciseQueryResponse>
-    { }
+    ) : IRequest<ExerciseQueryResponse>;
 
     public record ExerciseQueryResponse(string Name, string Description, IReadOnlyCollection<string> Medias);
 
@@ -15,25 +14,27 @@ namespace WorkoutPlan.Application.Queries.Exercises
         private readonly IDocumentStore _store;
         private readonly ILogger<GetExerciseByIdQueryHandler> _logger;
 
-        public GetExerciseByIdQueryHandler(IDocumentStore store, 
-                                           ILogger<GetExerciseByIdQueryHandler> logger)
+        public GetExerciseByIdQueryHandler(IDocumentStore store,
+            ILogger<GetExerciseByIdQueryHandler> logger)
         {
             _store = store;
             _logger = logger;
         }
 
-        public async Task<ExerciseQueryResponse> Handle(GetExerciseByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ExerciseQueryResponse> Handle(GetExerciseByIdQuery request,
+            CancellationToken cancellationToken)
         {
             _logger.LogInformation("Retrieving information for Exercise {Id}...", request.Id);
 
             using var session = _store.QuerySession();
 
-            var agg = await session.LoadAsync<Exercise>(request.Id);
+            var agg = await session.LoadAsync<Exercise>(request.Id, cancellationToken);
             var version = agg?.Version + 1 ?? 0;
 
-            var result = await session.Events.AggregateStreamAsync(request.Id, state: agg, fromVersion: version, token: cancellationToken);
+            var result = await session.Events.AggregateStreamAsync(request.Id, state: agg, fromVersion: version,
+                token: cancellationToken);
 
-            return result != null 
+            return result != null
                 ? new(result.Name, result.Description, result.Medias)
                 : default;
         }

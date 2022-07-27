@@ -53,8 +53,7 @@ namespace WorkoutPlan.Application.DI
             
             return services;
         }
-
-
+        
     }
 
 

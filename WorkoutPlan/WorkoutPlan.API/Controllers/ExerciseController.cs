@@ -49,11 +49,11 @@ namespace WorkoutPlan.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Get(Guid Id)
+        public async Task<IActionResult> Get(Guid id)
         {
             try
             {
-                var exercise = await _mediator.Send(new GetExerciseByIdQuery(Id));
+                var exercise = await _mediator.Send(new GetExerciseByIdQuery(id));
 
                 return exercise == default ? NotFound() : Ok(exercise);
             }
